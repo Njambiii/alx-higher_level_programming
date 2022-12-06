@@ -1,5 +1,3 @@
-es (20 sloc)  493 Bytes
-
 #include <Python.h>
 
 /**
