@@ -1,0 +1,55 @@
+====================
+``1-my_list`` module
+====================
+
+Tests for the class ``MyList`` which Inherits the class ``list``
+---------------------------------------------------------------------
+
+Import module
+-------------
+::
+	>>> MyList = __import__("1-my_list").MyList
+
+Empty list
+----------
+::
+	>>> myList = MyList()
+	>>> myList
+	[]
+
+Sort empty
+----------
+::
+	>>> myList.print_sorted()
+	[]
+
+Pass string as argument and print
+---------------------------------
+::
+	>>> myList = MyList("acbd")
+	>>> myList
+	['a', 'c', 'b', 'd']
+	>>> myList.print_sorted()
+	['a', 'b', 'c', 'd']
+
+Pass list as argument and sort
+------------------------------
+::
+	>>> myList = MyList([2, 4, 1])
+	>>> myList
+	[2, 4, 1]
+	>>> myList.print_sorted()
+	[1, 2, 4]
+
+Use print_sorted method
+-----------------------
+::
+	>>> myList.append(1)
+	>>> myList.append(5)
+	>>> myList.append(2)
+	>>> myList.append(8)
+	>>> myList.append(2)
+	>>> myList
+	[2, 4, 1, 1, 5, 2, 8, 2]
+	>>> myList.print_sorted()
+	[1, 1, 2, 2, 2, 4, 5, 8]
