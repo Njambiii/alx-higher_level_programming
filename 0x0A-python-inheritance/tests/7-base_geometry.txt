@@ -1,0 +1,84 @@
+=============================
+The ``7-base_geometry`` module
+=============================
+
+Using ``BaseGeometry``
+---------------------
+
+Import class from module
+------------------------
+::
+	>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+Tests
+-----
+::
+	>>> baseG = BaseGeometry()
+	>>> baseG.integer_validator("my_int", 12)
+	>>> baseG.integer_validator("width", 89)
+	>>> baseG.area()
+	Traceback (most recent call last):
+		...
+	Exception: area() is not implemented
+
+	>>> baseG.integer_validator("name", "John")
+	Traceback (most recent call last):
+		...
+	TypeError: name must be an integer
+
+	>>> baseG.integer_validator("age", 0)
+	Traceback (most recent call last):
+		...
+	ValueError: age must be greater than 0
+
+	>>> baseG.integer_validator("distance", -4)
+	Traceback (most recent call last):
+		...
+	ValueError: distance must be greater than 0
+
+	>>> baseG.integer_validator("average", 7.8)
+	Traceback (most recent call last):
+		...
+	TypeError: average must be an integer
+
+	>>> baseG.integer_validator("average")
+	Traceback (most recent call last):
+		...
+	TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+	>>> baseG.integer_validator()
+	Traceback (most recent call last):
+		...
+	TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+	>>> baseG.integer_validator("NaN", float('nan'))
+	Traceback (most recent call last):
+		...
+	TypeError: NaN must be an integer
+
+	>>> baseG.integer_validator("Big", 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000)
+
+	>>> baseG.integer_validator("age", (4,))
+	Traceback (most recent call last):
+		...
+	TypeError: age must be an integer
+
+	>>> baseG.integer_validator("age", [3])
+	Traceback (most recent call last):
+		...
+	TypeError: age must be an integer
+
+	>>> baseG.integer_validator("age", True)
+	Traceback (most recent call last):
+		...
+	TypeError: age must be an integer
+
+	>>> baseG.integer_validator("age", {3, 4})
+	Traceback (most recent call last):
+		...
+	TypeError: age must be an integer
+
+	>>> baseG.integer_validator("age", None)
+	Traceback (most recent call last):
+		...
+	TypeError: age must be an integer
