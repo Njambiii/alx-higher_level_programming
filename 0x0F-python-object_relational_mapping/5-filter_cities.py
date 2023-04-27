@@ -1,19 +1,38 @@
 #!/usr/bin/python3
-# Displays all cities of a given state from the
-# states table of the database hbtn_0e_4_usa.
-# Safe from SQL injections.
-# Usage: ./5-filter_cities.py <mysql username> \
-#                             <mysql password> \
-#                             <database name> \
-#                             <state name searched>
-import sys
+"""
+    script that takes in the name of a state as an argument and
+    lists all cities of that state, using the database hbtn_0e_4_usa
+"""
+from sys import argv
 import MySQLdb
-
 if __name__ == "__main__":
-    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
-    c = db.cursor()
-    c.execute("SELECT * FROM `cities` as `c` \
-                INNER JOIN `states` as `s` \
-                   ON `c`.`state_id` = `s`.`id` \
-                ORDER BY `c`.`id`")
-    print(", ".join([ct[2] for ct in c.fetchall() if ct[4] == sys.argv[4]]))
+    conn = MySQLdb.connect(
+        host="localhost",
+        port=3306,
+        user=argv[1],
+        passwd=argv[2],
+        db=argv[3],
+        charset="utf8")
+    cur = conn.cursor()
+    try:
+        arg = argv[4]
+        stmt = """
+        SELECT cities.name
+        FROM cities
+        WHERE cities.state_id LIKE BINARY
+        (SELECT states.id FROM states WHERE states.name LIKE BINARY %s)
+        ORDER BY cities.id ASC
+        """
+        cur.execute(stmt, (arg,))
+        rtn = cur.fetchall()
+    except MySQLdb.Error:
+        try:
+            rtn = ("MySQLdb Error")
+        except IndexError:
+            rtn = ("MySQLdb Error - IndexError")
+    rslt = []
+    for i in rtn:
+        rslt += i
+    print(", ".join(rslt))
+    cur.close()
+    conn.close()
